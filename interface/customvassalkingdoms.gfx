@@ -1,0 +1,8 @@
+spriteTypes = {
+
+        spriteType = {
+                name = "GFX_form_new_kingdom_for_vassal"
+                texturefile = "gfx/interface/decision_icon_form_new_kingdom.dds"
+        }
+
+}

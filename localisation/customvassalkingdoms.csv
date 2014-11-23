@@ -1,0 +1,4 @@
+#CODE;ENGLISH;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+form_new_kingdom_for_vassal;Found a new Kingdom for [Root.GetBestName];;;;;;;;;;;;;x
+form_new_kingdom_for_vassal_desc;[Root.GetBestName] is a King in all but name, perhaps it's time to make [Root.GetHerHim] one.;;;;;;;;;;;;;x
+does_not_completely_hold_kingdom_tooltip;[Root.GetBestName] does not completely hold the [This.GetFullName]\n;;;;;;;;;;;;;x

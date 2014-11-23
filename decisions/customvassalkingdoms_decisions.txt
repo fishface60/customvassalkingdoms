@@ -1,0 +1,117 @@
+vassal_decisions = {
+	form_new_kingdom_for_vassal = {
+		is_high_prio = yes
+		from_potential = {
+			tier = EMPEROR
+		}
+		potential = {
+			is_ruler = yes
+			is_landed = yes
+			prisoner = no
+			NOT = { tier = KING }
+			# Any vassal which controls more than one de-jure duchy in the kingdom
+			# of their primary title
+			primary_title = {
+				kingdom = {
+					any_direct_de_jure_vassal_title = {
+						count = 2
+						# Would prefer to check if title is inactive too, but you can't
+						# pass a reference to is_title_active
+						#is_title_active = THIS
+						is_titular = no
+						ROOT = {
+							completely_controls = PREV
+						}
+					}
+				}
+			}
+		}
+		allow = {
+			primary_title = {
+				kingdom = {
+					# At least 3 titles in the Kingdom of the primary title
+					# are completely controlled
+					custom_tooltip = {
+						text = form_new_kingdom_requirement_tooltip
+						hidden_tooltip = {
+							any_direct_de_jure_vassal_title = {
+								count = 3
+								# Would prefer to check if title is inactive too, but you can't
+								# pass a reference to is_title_active
+								#is_title_active = THIS
+								is_titular = no
+								ROOT = {
+									completely_controls = PREV
+								}
+							}
+						}
+					}
+					# Doesn't completely control the Kingdom
+					# should give him the land in that case
+					custom_tooltip = {
+						text = does_not_completely_hold_kingdom_tooltip
+						hidden_tooltip = {
+							any_direct_de_jure_vassal_title = {
+								ROOT = {
+									NOT = { completely_controls = PREV }
+								}
+							}
+						}
+					}
+					# Nobody else holds the Kingdom
+					OR = {
+						has_holder = no
+						FROM = {
+							has_landed_title = PREV
+						}
+					}
+				}
+			}
+		}
+		effect = {
+			primary_title = {
+				empire = {
+					create_title = {
+						tier = KING
+						landless = no
+						temporary = no
+						custom_created = yes
+						culture = ROOT
+						holder = FROM
+						base_title = PREV
+						copy_title_laws = yes
+					}
+					hidden_tooltip = {
+						new_title = {
+							# Make new title de-jure the
+							# Empire of the original kingdom
+							de_jure_liege = PREV
+							# Make new title hold lands in
+							# original Kingdom held by
+							# new King
+							ROOT = {
+								primary_title = {
+									kingdom = {
+										any_direct_de_jure_vassal_title = {
+											if = {
+												limit = {
+													ROOT = {
+														completely_controls = PREV
+													}
+												}
+												de_jure_liege = PREVPREVPREVPREV
+											}
+										}
+									}
+								}
+							}
+							# give title to new King
+							grant_title = ROOT
+						}
+					}
+					custom_tooltip = { text = form_new_kingdom_tooltip }
+				}
+			}
+		}
+	}
+}
